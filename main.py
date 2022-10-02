@@ -5,15 +5,15 @@ from art import logo
 
 def display_board():
     print(f"""
-     |     |     
-  {board[0][0]}  |  {board[0][1]}  |  {board[0][2]}  
-_____|_____|_____
-     |     |     
-  {board[1][0]}  |  {board[1][1]}  |  {board[1][2]}  
-_____|_____|_____
-     |     |     
-  {board[2][0]}  |  {board[2][1]}  |  {board[2][2]}  
-     |     |     
+                             |     |     
+                          {board[0][0]}  |  {board[0][1]}  |  {board[0][2]}  
+                        _____|_____|_____
+                             |     |     
+                          {board[1][0]}  |  {board[1][1]}  |  {board[1][2]}  
+                        _____|_____|_____
+                             |     |     
+                          {board[2][0]}  |  {board[2][1]}  |  {board[2][2]}  
+                             |     |     
     """)
     
 def replace_spot(pla_com):
@@ -56,6 +56,10 @@ def check_board():
     if board[0][2] == '\33[1;34mO\33[0m' and board[1][2] == '\33[1;34mO\33[0m' and board[2][2] == '\33[1;34mO\33[0m':
         return True
 
+def refresh():
+    clear()
+    logo()
+    
 board = [
     ['1','2','3'],
     ['4','5','6'],
@@ -75,12 +79,12 @@ while not end_game:
         break
 
     while check_board() != True:
-        p1 = input("Your turn, player 1: ")
+        p1 = input("Your turn: ")
         list_num.remove(p1)
         replace_spot(p1)
         
-        clear()
-        logo()
+        refresh()
+        
         display_board()
         check_board()
 
@@ -91,10 +95,10 @@ while not end_game:
             list_num.remove(com)
             replace_spot(com)
             
-            clear()
-            logo()
+            refresh()
             print("Computer's turn:")
             time.sleep(1)
+            
             display_board()
             check_board()
 
