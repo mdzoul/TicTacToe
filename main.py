@@ -68,103 +68,135 @@ def check_board():
 def refresh():
     clear()
     logo()
-    
-board = [
+
+def loading(a):
+    if a == "Start":
+        b = "2"
+    elif a == "Exit":
+        b = "1"
+    clear()
+    logo()
+    print(f"\33[3{b}m{a}ing game.\33[0m")
+    time.sleep(0.5)
+    clear()
+    logo()
+    print(f"\33[3{b}m{a}ing game..\33[0m")
+    time.sleep(0.5)
+    clear()
+    logo()
+    print(f"\33[3{b}m{a}ing game...\33[0m")
+    time.sleep(0.5)
+    clear()
+    logo()
+
+should_end = False
+while not should_end:
+    board = [
     ['1','2','3'],
     ['4','5','6'],
     ['7','8','9'],
-]    
-list_num = ['1','2','3','4','5','6','7','8','9']
-
-logo()
-
-p1_vs = input("How many players?: ")
-
-clear()
-if p1_vs == '1':
-    logo()
-    display_board()
+    ]    
     
-    end_game = False
-    while not end_game:
-        if check_board() == True:
-            end_game = True
-            print("\33[31mGame Over\33[0m")
-            break
+    list_num = ['1','2','3','4','5','6','7','8','9']
+
+    loading("Start")
     
-        while check_board() != True:
-            if list_num != []:
-                p1 = input("Your turn: ")
-                list_num.remove(p1)
-                replace_spot(p1)
-                
-                refresh()
-                
-                display_board()
-                check_board()
+    p1_vs = input("How many players?: ")
+    
+    clear()
+    if p1_vs == '1':
+        logo()
+        display_board()
         
+        end_game = False
+        while not end_game:
+            if check_board() == True:
+                end_game = True
+                print("\33[31mGame Over\33[0m")
                 time.sleep(1)
+                break
         
-                if check_board() != True:
-                    if list_num != []:
-                        com = str(random.choice(list_num))
-                        list_num.remove(com)
-                        replace_spot(com)
-                        
-                        refresh()
-                        print("Computer's turn:")
-                        time.sleep(1)
-                        
-                        display_board()
-                        check_board()
+            while check_board() != True:
+                if list_num != []:
+                    p1 = input("Your turn: ")
+                    list_num.remove(p1)
+                    replace_spot(p1)
+                    
+                    refresh()
+                    
+                    display_board()
+                    check_board()
             
-                        time.sleep(1)
+                    time.sleep(1)
+            
+                    if check_board() != True:
+                        if list_num != []:
+                            com = str(random.choice(list_num))
+                            list_num.remove(com)
+                            replace_spot(com)
+                            
+                            refresh()
+                            print("Computer's turn:")
+                            time.sleep(0.5)
+                            
+                            display_board()
+                            check_board()
+                
+                            time.sleep(1)
+                        else:
+                            break
                     else:
                         break
                 else:
                     break
-            else:
+            
+    elif p1_vs == '2':
+        logo()
+        display_board()
+        
+        end_game = False
+        while not end_game:
+            if check_board() == True:
+                end_game = True
+                print("\33[31mGame Over\33[0m")
                 break
         
-elif p1_vs == '2':
-    logo()
-    display_board()
-    
-    end_game = False
-    while not end_game:
-        if check_board() == True:
-            end_game = True
-            print("\33[31mGame Over\33[0m")
-            break
-    
-        while check_board() != True:
-            if list_num != []:
-                p1 = input("Player 1's turn: ")
-                list_num.remove(p1)
-                replace_spot(p1)
-                
-                refresh()
-                
-                display_board()
-                check_board()
-        
-                time.sleep(1)
-        
-                if check_board() != True:
-                    if list_num != []:
-                        p2 = input("Player 2's turn: ")
-                        list_num.remove(p2)
-                        replace_spot(p2)
-                        
-                        refresh()
-                        
-                        display_board()
-                        check_board()
-                
-                        time.sleep(1)
+            while check_board() != True:
+                if list_num != []:
+                    p1 = input("Player 1's turn: ")
+                    list_num.remove(p1)
+                    replace_spot(p1)
+                    
+                    refresh()
+                    
+                    display_board()
+                    check_board()
+            
+                    time.sleep(1)
+            
+                    if check_board() != True:
+                        if list_num != []:
+                            p2 = input("Player 2's turn: ")
+                            list_num.remove(p2)
+                            replace_spot(p2)
+                            
+                            refresh()
+                            
+                            display_board()
+                            check_board()
+                    
+                            time.sleep(1)
+                        else:
+                            break
                     else:
                         break
                 else:
                     break
-            else:
-                break
+
+    restart = input("\nRestart match? \33[32mY\33[0m/\33[31mN\33[0m\n").lower()
+    if restart == 'n':
+        should_end = True
+        loading("Exit")
+    elif restart == 'y':
+        clear()
+        continue
